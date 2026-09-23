@@ -4,7 +4,6 @@ import CrudActions from "../../../shared/components/CrudActions";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
-import { formatarData } from "../../../shared/util/dateUtils";
 import { listar } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_EMPRESA } from "../service/EmpresaService";
 export default function EmpresaPage() {

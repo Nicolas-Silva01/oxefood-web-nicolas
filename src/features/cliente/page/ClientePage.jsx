@@ -53,7 +53,6 @@ export default function ClientePage() {
                                    <th>Nome</th>
                                    <th>CPF</th>
                                    <th>Data de Nascimento</th>
-                                   <th>Ações</th>
                                </tr>
                            </thead>
                            <tbody>
