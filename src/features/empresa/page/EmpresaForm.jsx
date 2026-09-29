@@ -7,7 +7,7 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";
 import { cadastrar } from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_EMPRESA } from "../../empresa/service/empresaService";
+import { MAPPING_CONTROLLER_EMPRESA } from "../../empresa/service/EmpresaService";
 
 export default function EmpresaForm() {
 
@@ -186,7 +186,7 @@ export default function EmpresaForm() {
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <div style={{marginTop: '50px', textAlign: 'left'}}>
-                                        <BackButton destino="/cliente" />
+                                        <BackButton destino="/empresa" />
                                     </div>
                                     
                                 </div>

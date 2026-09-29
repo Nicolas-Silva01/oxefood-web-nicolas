@@ -116,7 +116,6 @@ export default function ProdutoForm() {
                                     <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="valorUnitario">Valor Unitário</label>
                                         <IMaskInput
-                                            mask="#.##0,00"
                                             value={produto.valorUnitario}
                                             onAccept={(value) =>
                                                 setProduto({ ...produto, valorUnitario: value })
@@ -133,7 +132,6 @@ export default function ProdutoForm() {
                                     <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="tempoEntregaMinimo">Tempo de Entrega Minimo</label>
                                         <IMaskInput
-                                            mask="(00) 0 0000.0000"
                                             value={produto.tempoEntregaMinimo}
                                             onAccept={(value) =>
                                                 setProduto({ ...produto, tempoEntregaMinimo: value })
@@ -149,7 +147,7 @@ export default function ProdutoForm() {
                                     <fieldset className="fieldset w-full">
                                         <legend className="fieldset-legend" htmlFor="tempoEntregaMaximo">Tempo de Entrega Máximo</legend>
                                         <IMaskInput
-                                            mask="(00) 0 0000.0000"
+                                            
                                             value={produto.tempoEntregaMaximo}
                                             onAccept={(value) =>
                                                 setProduto({ ...produto, tempoEntregaMaximo: value })
@@ -166,7 +164,7 @@ export default function ProdutoForm() {
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <div style={{marginTop: '50px', textAlign: 'left'}}>
-                                        <BackButton destino="/cliente" />
+                                        <BackButton destino="/produto" />
                                     </div>
                                     
                                 </div>

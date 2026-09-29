@@ -5,8 +5,8 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
 import { formatarData } from "../../../shared/util/dateUtils";
-import { listar } from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_PRODUTO } from "../service/ProdutoService";
+import { listar, remover} from "../../../shared/services/crudService";
+import { MAPPING_CONTROLLER_PRODUTO } from "../service/produtoService";
 
 export default function ProdutoPage() {
 
@@ -24,10 +24,23 @@ export default function ProdutoPage() {
    function editar(id) {}
 
    async function confirmarRemover(id) {
-       if (confirm("Deseja realmente excluir este produto?")) {
-           console.log(id);
-       }
-   }
+
+    if (!confirm("Deseja realmente excluir este produto?")) {
+        return;
+    }
+
+    try {
+
+        await remover(MAPPING_CONTROLLER_PRODUTO, id);
+        await carregar();
+        toast.success("Produto removido com sucesso!");
+
+    } catch (erro) {
+
+        console.error(erro);
+        toast.error("Erro ao tentar remover o produto.");
+    }
+}
 
    return (
        <div>
