@@ -4,9 +4,11 @@ import CrudActions from "../../../shared/components/CrudActions";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
+import { toast } from "react-toastify";
 import { formatarData } from "../../../shared/util/dateUtils";
-import { listar, remover} from "../../../shared/services/crudService";
+import { buscarPorId, listar, remover} from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_PRODUTO } from "../service/produtoService";
+
 
 export default function ProdutoPage() {
 
@@ -15,6 +17,42 @@ export default function ProdutoPage() {
    useEffect(() => {
        carregar();
    }, []);
+
+    const [produto, setProduto] = useState({
+        id: null,
+        codigo: "",
+        titulo: "",
+        descricao: "",
+        valorUnitario: "",
+        tempoEntregaMinimo: "",
+        tempoEntregaMaximo: ""
+    });
+
+    async function detalhar(id) {
+
+    try {
+    
+        const data = await buscarPorId(
+            MAPPING_CONTROLLER_PRODUTO,
+            id
+        );
+
+        setProduto({
+            id: data.id,
+            codigo: data.codigo ?? "",
+            titulo: data.titulo ?? "",
+            descricao: data.descricao ?? "",
+            valorUnitario: data.valorUnitario ?? "",
+            tempoEntregaMinimo: data.tempoEntregaMinimo ?? "",
+            tempoEntregaMaximo: data.tempoEntregaMaximo ?? ""
+        });
+
+        document.getElementById('modal-detalhar').showModal()
+
+    } catch (erro) {
+        toast.error("Erro ao carregar produto.");
+    }
+}
 
    async function carregar() {
       const data = await listar(MAPPING_CONTROLLER_PRODUTO);
@@ -63,20 +101,20 @@ export default function ProdutoPage() {
                        <table className="table table-zebra">
                            <thead>
                                <tr style={{textAlign: 'center'}}>
-                                   <th>Nome</th>
-                                   <th>Preço</th>
+                                   <th>Código</th>
+                                   <th>Título</th>
                                    <th>Descrição</th>
-                                   <th>Ações</th>
                                </tr>
                            </thead>
                            <tbody>
                                {lista.map(produto => (
                                    <tr key={produto.id}>
-                                       <td style={{width: '50%'}}>{produto.nome}</td>
-                                       <td style={{textAlign: 'center'}}>{produto.preco}</td>
+                                       <td style={{width: '50%'}}>{produto.codigo}</td>
+                                       <td style={{textAlign: 'center'}}>{produto.titulo}</td>
                                        <td style={{textAlign: 'center'}}>{produto.descricao}</td>
                                        <td style={{textAlign: 'center'}}>
                                            <CrudActions
+                                               onDetail={() => detalhar(produto.id)}
                                                onEdit={() => editar(produto.id)}
                                                onDelete={() => confirmarRemover(produto.id)}
                                            />
@@ -88,6 +126,37 @@ export default function ProdutoPage() {
                    </div>
                </div>
            </div>
+            <dialog id="modal-detalhar" className="modal">
+                <div className="modal-box">   
+                    <h3 className="font-bold text-lg">Dados do Produto</h3>
+                    <div className="divider" />
+                    <p className="py-4"> 
+                        <strong>Código:</strong> {produto.codigo}
+                    </p>
+                    <p className="py-4">
+                        <strong>Título:</strong> {produto.titulo}
+                    </p>
+                    <p className="py-4">
+                        <strong>Descrição:</strong> {produto.descricao}
+                    </p>
+                    <p className="py-4">
+                        <strong>Valor Unitário:</strong> {produto.valorUnitario}
+                    </p>
+                    <p className="py-4">
+                        <strong>Tempo de Entrega Mínimo:</strong> {produto.tempoEntregaMinimo}
+                    </p>
+                    <p className="py-4">
+                        <strong>Tempo de Entrega Máximo:</strong> {produto.tempoEntregaMaximo}
+                    </p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Fechar</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+
            <Footer />
        </div>
    );

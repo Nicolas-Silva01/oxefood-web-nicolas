@@ -60,23 +60,6 @@ export default function ProdutoForm() {
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="codigo">Código</label>
-                                        <input
-                                            type="text"
-                                            id="codigo"
-                                            className="input input-bordered w-full"
-                                            value={produto.codigo}
-                                            onChange={(e) => 
-                                                setProduto({ ...produto, codigo: e.target.value }) 
-                                            }
-                                        />
-                                    </fieldset>
-                                    
-                                </div>
-
-<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="titulo">Título</label>
                                         <input
                                             type="text"
@@ -88,34 +71,54 @@ export default function ProdutoForm() {
                                             }
                                         />
                                     </fieldset>
-
+                                    
                                 </div>
-                            </div>
 
-                            <div className="flex w-full" >
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
+<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="descricao">Descrição</label>
-                                        <textarea
-                                            id="descricao"
-                                            className="input input-bordered w-full"
-                                            value={produto.descricao}
-                                            onChange={(e) =>
-                                                setProduto({ ...produto, descricao: e.target.value })
+                                        <label className="fieldset-legend" htmlFor="codigo">Código</label>
+                                        <IMaskInput
+                                            mask="0000-0000"
+                                            value={produto.codigo}
+                                            onAccept={(value) =>
+                                                setProduto({ ...produto, codigo: value })
                                             }
+                                            className="input input-bordered w-full"
+                                            id="codigo"
                                         />
                                     </fieldset>
 
                                 </div>
                             </div>
 
-                            <div className="flex w-full" >
+                            <div>
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
+
+                                    <fieldset className="fieldset w-full">
+                                        <label className="fieldset-legend" htmlFor="descricao">Descrição</label>
+                                        <IMaskInput
+                                        type="text"
+                                        id="descricao"
+                                            value={produto.descricao}
+                                            onAccept={(value) =>
+                                                setProduto({ ...produto, descricao: value })
+                                            }
+                                            className="input input-bordered w-full"
+                                        />
+                                    </fieldset>
+                                    
+                                </div>
+                            </div>
+
+                            <div className="flex w-full" >
+
+<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="valorUnitario">Valor Unitário</label>
                                         <IMaskInput
+                                            type="value"
                                             value={produto.valorUnitario}
                                             onAccept={(value) =>
                                                 setProduto({ ...produto, valorUnitario: value })
@@ -126,34 +129,35 @@ export default function ProdutoForm() {
                                     </fieldset>
                                     
                                 </div>
-
-<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
+                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="tempoEntregaMinimo">Tempo de Entrega Minimo</label>
-                                        <IMaskInput
-                                            value={produto.tempoEntregaMinimo}
-                                            onAccept={(value) =>
-                                                setProduto({ ...produto, tempoEntregaMinimo: value })
-                                            }
+                                        <legend className="fieldset-legend" htmlFor="tempoEntregaMinimo">Tempo de Entrega Mínimo</legend>
+                                        <input 
+                                            type="time"  
+                                            id="tempoEntregaMinimo" 
                                             className="input input-bordered w-full"
-                                            id="tempoEntregaMinimo"
+                                            value={produto.tempoEntregaMinimo} 
+                                            onChange={(e) => 
+                                                setProduto({ ...produto, tempoEntregaMinimo: e.target.value }) 
+                                            }
                                         />
                                     </fieldset>
-                                    
+
                                 </div>
+
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
                                         <legend className="fieldset-legend" htmlFor="tempoEntregaMaximo">Tempo de Entrega Máximo</legend>
-                                        <IMaskInput
-                                            
-                                            value={produto.tempoEntregaMaximo}
-                                            onAccept={(value) =>
-                                                setProduto({ ...produto, tempoEntregaMaximo: value })
-                                            }
+                                        <input 
+                                            type="time"  
+                                            id="tempoEntregaMaximo" 
                                             className="input input-bordered w-full"
-                                            id="tempoEntregaMaximo"
+                                            value={produto.tempoEntregaMaximo} 
+                                            onChange={(e) => 
+                                                setProduto({ ...produto, tempoEntregaMaximo: e.target.value }) 
+                                            }
                                         />
                                     </fieldset>
 
@@ -164,7 +168,7 @@ export default function ProdutoForm() {
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <div style={{marginTop: '50px', textAlign: 'left'}}>
-                                        <BackButton destino="/produto" />
+                                        <BackButton destino="/cliente" />
                                     </div>
                                     
                                 </div>

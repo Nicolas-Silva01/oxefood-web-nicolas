@@ -5,7 +5,7 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
 import { toast } from "react-toastify";
-import { listar, remover } from "../../../shared/services/crudService";
+import { buscarPorId, listar, remover } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_EMPRESA } from "../service/EmpresaService";
 export default function EmpresaPage() {
 
@@ -14,6 +14,45 @@ export default function EmpresaPage() {
    useEffect(() => {
        carregar();
    }, []);
+
+   const [empresa, setEmpresa] = useState({
+        id: null,
+        site: "",
+        cnpj: "",
+        inscricaoEstadual: "",
+        nomeEmpresarial: "",
+        nomeFantasia: "",
+        fone: "",
+        foneAlternativo: ""
+    });
+
+    async function detalhar(id) {
+
+    try {
+    
+        const data = await buscarPorId(
+            MAPPING_CONTROLLER_EMPRESA,
+            id
+        );
+
+        setEmpresa({
+            id: data.id,
+            site: data.site ?? "",
+            cnpj: data.cnpj ?? "",
+            inscricaoEstadual: data.inscricaoEstadual ?? "",
+            nomeEmpresarial: data.nomeEmpresarial ?? "",
+            nomeFantasia: data.nomeFantasia ?? "",
+            fone: data.fone ?? "",
+            foneAlternativo: data.foneAlternativo ?? ""
+            
+        });
+
+        document.getElementById('modal-detalhar').showModal()
+
+    } catch (erro) {
+        toast.error("Erro ao carregar cliente.");
+    }
+}
 
    async function carregar() {
       const data = await listar(MAPPING_CONTROLLER_EMPRESA);
@@ -63,20 +102,20 @@ export default function EmpresaPage() {
                        <table className="table table-zebra">
                            <thead>
                                <tr style={{textAlign: 'center'}}>
-                                   <th>Nome</th>
-                                   <th>Preço</th>
-                                   <th>Descrição</th>
-                                   <th>Ações</th>
+                                   <th>Site</th>
+                                   <th>CNPJ</th>
+                                   <th>Nome Fantasia</th>
                                </tr>
                            </thead>
                            <tbody>
                                {lista.map(empresa => (
                                    <tr key={empresa.id}>
-                                       <td style={{width: '50%'}}>{empresa.nome}</td>
-                                       <td style={{textAlign: 'center'}}>{empresa.preco}</td>
-                                       <td style={{textAlign: 'center'}}>{empresa.descricao}</td>
+                                       <td style={{width: '50%'}}>{empresa.site}</td>
+                                       <td style={{textAlign: 'center'}}>{empresa.cnpj}</td>
+                                       <td style={{textAlign: 'center'}}>{empresa.nomeFantasia}</td>
                                        <td style={{textAlign: 'center'}}>
                                            <CrudActions
+                                               onDetail={() => detalhar(empresa.id)}
                                                onEdit={() => editar(empresa.id)}
                                                onDelete={() => confirmarRemover(empresa.id)}
                                            />
@@ -88,6 +127,40 @@ export default function EmpresaPage() {
                    </div>
                </div>
            </div>
+           <dialog id="modal-detalhar" className="modal">
+                <div className="modal-box">   
+                    <h3 className="font-bold text-lg">Dados da Empresa</h3>
+                    <div className="divider" />
+                    <p className="py-4"> 
+                        <strong>Site:</strong> {empresa.site}
+                    </p>
+                    <p className="py-4">
+                        <strong>CNPJ:</strong> {empresa.cnpj}
+                    </p>
+                    <p className="py-4">
+                        <strong>Inscrição Estadual:</strong> {empresa.inscricaoEstadual}
+                    </p>
+                    <p className="py-4">
+                        <strong>Nome Empresarial:</strong> {empresa.nomeEmpresarial}
+                    </p>
+                    <p className="py-4">
+                        <strong>Nome Fantasia:</strong> {empresa.nomeFantasia}
+                    </p>
+                    <p className="py-4">
+                        <strong>Fone:</strong> {empresa.fone}
+                    </p>
+                    <p className="py-4">
+                        <strong>Fone Alternativo:</strong> {empresa.foneAlternativo}
+                    </p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Fechar</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+
            <Footer />
        </div>
    );
