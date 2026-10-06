@@ -39,7 +39,8 @@ export default function ProdutoForm() {
                 { label: "Produto" },
                 { label: "Cadastrar" }
             ]} />
-<div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
+            
+            <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
 
                 <div className="overflow-x-auto shadow-sm">
 
@@ -74,7 +75,7 @@ export default function ProdutoForm() {
                                     
                                 </div>
 
-<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
+                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="codigo">Código</label>
@@ -113,7 +114,7 @@ export default function ProdutoForm() {
 
                             <div className="flex w-full" >
 
-<div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
+                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <fieldset className="fieldset w-full">
                                         <label className="fieldset-legend" htmlFor="valorUnitario">Valor Unitário</label>
@@ -164,11 +165,11 @@ export default function ProdutoForm() {
                                 </div>
                             </div>
 
-<div className="flex w-full" >
+                            <div className="flex w-full" >
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <div style={{marginTop: '50px', textAlign: 'left'}}>
-                                        <BackButton destino="/cliente" />
+                                        <BackButton destino="/produto" />
                                     </div>
                                     
                                 </div>
