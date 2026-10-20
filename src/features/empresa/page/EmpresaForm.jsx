@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IMaskInput } from 'react-imask';
 import { toast } from 'react-toastify';
 import BackButton from "../../../shared/components/BackButton";
@@ -6,12 +6,24 @@ import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";
-import { cadastrar } from "../../../shared/services/crudService";
+import { atualizar, buscarPorId, cadastrar } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_EMPRESA } from "../../empresa/service/EmpresaService";
+import { useParams } from "react-router-dom";
 
 export default function EmpresaForm() {
 
+    const { idEmpresa } = useParams();
+
+    useEffect(() => {
+
+       if (idEmpresa) {
+           carregarEmpresa();
+       }
+   }, [idEmpresa]);
+
+
     const [empresa, setEmpresa] = useState({
+        id: null,
         site: "",
         cnpj: "",
         inscricaoEstadual: "",
@@ -24,22 +36,61 @@ export default function EmpresaForm() {
     async function salvar() {
         
         try {
-            await cadastrar(MAPPING_CONTROLLER_EMPRESA, empresa);
-            toast.success("Empresa cadastrada com sucesso!");
+            if (idEmpresa) {
+                await atualizar(MAPPING_CONTROLLER_EMPRESA, empresa);
+                toast.success("Empresa alterada com sucesso!");
+            } else {
+                await cadastrar(MAPPING_CONTROLLER_EMPRESA, empresa);
+                toast.success("Empresa cadastrada com sucesso!");
+            }
         } catch (erro) {
             toast.error("Erro ao cadastrar empresa.");
         }
     }
+
+    async function carregarEmpresa() {
+
+       try {
+
+           const data = await buscarPorId(
+               MAPPING_CONTROLLER_EMPRESA,
+               idEmpresa
+           );
+
+           setEmpresa({
+               id: data.id,
+               site: data.site ?? "",
+               cnpj: data.cnpj ?? "",
+               inscricaoEstadual: data.inscricaoEstadual ?? "",
+               nomeEmpresarial: data.nomeEmpresarial ?? "",
+               nomeFantasia: data.nomeFantasia ?? "",
+               fone: data.fone ?? "",
+               foneAlternativo: data.foneAlternativo ?? ""
+           });
+
+       } catch (erro) {
+           toast.error("Erro ao carregar empresa.");
+       }
+   }
+
 
     return (
 
         <div>
             <Menu />
 
-            <Breadcrumbs items={[
-                { label: "Empresa" },
-                { label: "Cadastrar" }
-            ]} />
+            {idEmpresa ?
+                <Breadcrumbs items={[
+                    { label: "Empresa" },
+                    {  label: "Alterar" }
+                ]} />
+:
+                <Breadcrumbs items={[
+                    { label: "Empresa" },
+                    {  label: "Cadastrar" }
+                ]} />
+}
+
 <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
 
                 <div className="overflow-x-auto shadow-sm">
@@ -47,7 +98,7 @@ export default function EmpresaForm() {
                     <div className="flex items-center justify-between mb-6" style={{marginTop: '20px', marginLeft: '10px', marginRight: '10px'}}>
 
                         <h1 className="text-3xl font-bold text-gray-800">
-                            Nova Empresa
+                            {idEmpresa ? "Alterar Empresa" : "Nova Empresa"}
                         </h1>
 
                     </div>

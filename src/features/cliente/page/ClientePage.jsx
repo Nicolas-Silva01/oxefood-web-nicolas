@@ -8,15 +8,23 @@ import { toast } from "react-toastify";
 import { formatarData } from "../../../shared/util/dateUtils";
 import { buscarPorId, listar, remover} from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_CLIENTE } from "../service/clienteService";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ClientePage() {
 
    const [lista, setLista] = useState([]);
+   const navigate = useNavigate();
 
    useEffect(() => {
        carregar();
    }, []);
+
+   function editar(id) {
+
+        navigate(`/cliente-form/${id}`);
+    }
+
 
     const [cliente, setCliente] = useState({
         id: null,
@@ -57,7 +65,11 @@ export default function ClientePage() {
       setLista(data);
    }
 
-   function editar(id) {}
+    function editar(id) {
+
+        navigate(`/cliente-form/${id}`);
+    }
+
 
    async function confirmarRemover(id) {
 
@@ -66,7 +78,6 @@ export default function ClientePage() {
     }
 
     try {
-
         await remover(MAPPING_CONTROLLER_CLIENTE, id);
         await carregar();
         toast.success("Cliente removido com sucesso!");

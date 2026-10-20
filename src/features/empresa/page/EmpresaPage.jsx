@@ -7,9 +7,11 @@ import NewButton from "../../../shared/components/NewButton";
 import { toast } from "react-toastify";
 import { buscarPorId, listar, remover } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_EMPRESA } from "../service/EmpresaService";
+import { useNavigate } from "react-router-dom";
 export default function EmpresaPage() {
 
    const [lista, setLista] = useState([]);
+   const navigate = useNavigate();
 
    useEffect(() => {
        carregar();
@@ -59,7 +61,11 @@ export default function EmpresaPage() {
       setLista(data);
    }
 
-   function editar(id) {}
+  function editar(id) {
+
+    navigate(`/empresa-form/${id}`);
+}
+
 
    async function confirmarRemover(id) {
 
