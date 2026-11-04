@@ -8,11 +8,18 @@ import { toast } from "react-toastify";
 import { formatarData } from "../../../shared/util/dateUtils";
 import { buscarPorId, listar, remover} from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_PRODUTO } from "../service/produtoService";
-
+import { useNavigate } from "react-router-dom";
 
 export default function ProdutoPage() {
 
    const [lista, setLista] = useState([]);
+   const navigate = useNavigate();
+
+   function editar(id) {
+
+        navigate(`/cliente-form/${id}`);
+    }
+
 
    useEffect(() => {
        carregar();
