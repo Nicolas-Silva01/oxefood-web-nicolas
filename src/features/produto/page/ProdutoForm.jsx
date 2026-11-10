@@ -9,16 +9,21 @@ import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";
 import { atualizar, buscarPorId, cadastrar } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_PRODUTO } from "../../produto/service/produtoService";
+import { MAPPING_CONTROLLER_CATEGORIA_PRODUTO } from "../../produto/service/categoriaProdutoService";
+
 
 export default function ProdutoForm() {
 
     const { idProduto } = useParams();
+    const [listaCategoria, setListaCategoria] = useState([]);
 
     useEffect(() => {
 
        if (idProduto) {
            carregarProduto();
        }
+       carregarCategoriasProduto();
+
    }, [idProduto]);
 
    async function carregarProduto() {
@@ -32,6 +37,7 @@ export default function ProdutoForm() {
 
            setProduto({
                id: data.id,
+               idCategoria: data.categoria.id ?? "",
                codigo: data.codigo ?? "",
                titulo: data.titulo ?? "",
                descricao: data.descricao ?? "",
@@ -44,6 +50,21 @@ export default function ProdutoForm() {
            toast.error("Erro ao carregar produto.");
        }
    }
+
+   async function carregarCategoriasProduto() {
+
+        try {
+
+            const data = await listar(MAPPING_CONTROLLER_CATEGORIA_PRODUTO);
+            setListaCategoria(data);
+
+        } catch (erro) {
+
+            console.log(erro)
+            toast.error("Erro ao carregar as categorias de produto.");
+        }
+    }
+
 
     const [produto, setProduto] = useState({
         id: null,
@@ -139,6 +160,27 @@ export default function ProdutoForm() {
                                     </fieldset>
 
                                 </div>
+                            </div>
+
+                            <div>
+                                <fieldset className="fieldset">
+                                    <legend className="fieldset-legend">Categoria</legend>
+                                    <select
+                                            className="select  w-full"
+                                            value={produto.idCategoria}
+                                            onChange={(e) =>
+                                                setProduto({ ...produto, idCategoria: e.target.value })
+                                            }
+                                        >
+                                            <option value="">Selecione ...</option>
+                                            {listaCategoria.map((categoria, index) => (
+                                                <option key={index} value={categoria.id}>
+                                                    {categoria.descricao}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </fieldset>
+
                             </div>
 
                             <div>

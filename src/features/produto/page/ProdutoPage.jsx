@@ -27,6 +27,7 @@ export default function ProdutoPage() {
 
     const [produto, setProduto] = useState({
         id: null,
+        categoria: "",
         codigo: "",
         titulo: "",
         descricao: "",
@@ -46,6 +47,7 @@ export default function ProdutoPage() {
 
         setProduto({
             id: data.id,
+            categoria: data.categoria ?? "",
             codigo: data.codigo ?? "",
             titulo: data.titulo ?? "",
             descricao: data.descricao ?? "",
@@ -108,15 +110,17 @@ export default function ProdutoPage() {
                        <table className="table table-zebra">
                            <thead>
                                <tr style={{textAlign: 'center'}}>
-                                   <th>Código</th>
-                                   <th>Título</th>
-                                   <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Código</th>
+                                    <th>Título</th>
+                                    <th>Descrição</th>
                                </tr>
                            </thead>
                            <tbody>
                                {lista.map(produto => (
                                    <tr key={produto.id}>
-                                       <td style={{width: '50%'}}>{produto.codigo}</td>
+                                       <td style={{textAlign: 'center'}}>{produto.categoria.descricao}</td>
+                                       <td style={{textAlign: 'center'}}>{produto.codigo}</td>
                                        <td style={{textAlign: 'center'}}>{produto.titulo}</td>
                                        <td style={{textAlign: 'center'}}>{produto.descricao}</td>
                                        <td style={{textAlign: 'center'}}>
@@ -137,6 +141,9 @@ export default function ProdutoPage() {
                 <div className="modal-box">   
                     <h3 className="font-bold text-lg">Dados do Produto</h3>
                     <div className="divider" />
+                    <p className="py-4">
+                        <strong>Categoria:</strong> {produto.categoria.descricao}
+                    </p>
                     <p className="py-4"> 
                         <strong>Código:</strong> {produto.codigo}
                     </p>
