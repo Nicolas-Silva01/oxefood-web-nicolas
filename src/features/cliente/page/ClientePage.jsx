@@ -10,7 +10,6 @@ import { buscarPorId, listar, remover} from "../../../shared/services/crudServic
 import { MAPPING_CONTROLLER_CLIENTE } from "../service/clienteService";
 import { useNavigate } from "react-router-dom";
 
-
 export default function ClientePage() {
 
    const [lista, setLista] = useState([]);

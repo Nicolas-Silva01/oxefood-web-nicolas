@@ -6,6 +6,7 @@ import EmpresaPage from "../features/empresa/page/EmpresaPage";
 import VotoPage from "../features/voto/page/VotoPage";
 
 import ClienteForm from "../features/cliente/page/ClienteForm";
+import EnderecoClienteForm from "../features/cliente/page/EnderecoClienteForm";
 import ProdutoForm from "../features/produto/page/ProdutoForm";
 import EmpresaForm from "../features/empresa/page/EmpresaForm";
 import VotoForm from "../features/voto/page/VotoForm";
@@ -23,6 +24,7 @@ export default function Router() {
 
                <Route path="/cliente" element={<ClientePage />} />
                <Route path="/cliente-form/:idCliente?" element={<ClienteForm />} />
+               <Route path="/enderecocliente-form/:idEnderecoCliente?" element={<EnderecoClienteForm />} />
 
                <Route path="/produto" element={<ProdutoPage />} />
                 <Route path="/produto-form/:idProduto?" element={<ProdutoForm />} />
